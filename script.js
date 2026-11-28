@@ -11,7 +11,6 @@ const EPISODES_URL = "https://api.tvmaze.com/shows/82/episodes";
 
 function setup() {
   rootElem.textContent = "Loading episodes, please wait...";
-
   fetch(EPISODES_URL)
     .then((response) => {
       if (!response.ok) {
@@ -24,7 +23,6 @@ function setup() {
       makePageForEpisodes(allEpisodes);
       makeEpisodeSelect(allEpisodes);
       updateMatchCount(allEpisodes.length, allEpisodes.length);
-
       searchInput.addEventListener("input", handleSearch);
       episodeSelect.addEventListener("change", handleSelect);
     })
