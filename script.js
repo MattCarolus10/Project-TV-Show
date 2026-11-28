@@ -7,14 +7,30 @@ const matchCount = document.getElementById("match-count");
 
 let allEpisodes = [];
 
-function setup() {
-  allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
-  makeEpisodeSelect(allEpisodes);
-  updateMatchCount(allEpisodes.length, allEpisodes.length);
+const EPISODES_URL = "https://api.tvmaze.com/shows/82/episodes";
 
-  searchInput.addEventListener("input", handleSearch);
-  episodeSelect.addEventListener("change", handleSelect);
+function setup() {
+  rootElem.textContent = "Loading episodes, please wait...";
+  fetch(EPISODES_URL)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Server responded with status ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((episodes) => {
+      allEpisodes = episodes;
+      makePageForEpisodes(allEpisodes);
+      makeEpisodeSelect(allEpisodes);
+      updateMatchCount(allEpisodes.length, allEpisodes.length);
+      searchInput.addEventListener("input", handleSearch);
+      episodeSelect.addEventListener("change", handleSelect);
+    })
+    .catch((error) => {
+      rootElem.textContent =
+        "Sorry, something went wrong loading the episodes. Please try again later.";
+      console.error(error);
+    });
 }
 
 function makeEpisodeCode(season, number) {
@@ -108,7 +124,8 @@ function makeEpisodeCard(episode) {
   }
 
   const summary = document.createElement("div");
-  summary.textContent = stripHtml(episode.summary || "") || "No summary available.";
+  summary.textContent =
+    stripHtml(episode.summary || "") || "No summary available.";
   card.append(summary);
 
   return card;
