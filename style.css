@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  color: rgb(40, 39, 39);
+  color: rgb(1, 1, 1);
 }
 
 .episode-card {
@@ -19,4 +19,8 @@
 header, footer {
   padding: 1rem;
   text-align: center;
+}
+
+h2 {
+  color: rgb(138, 28, 3);
 }
