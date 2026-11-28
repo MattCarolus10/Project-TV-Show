@@ -15,3 +15,8 @@
 .episode-card img {
   width: 100%;
 }
+
+header, footer {
+  padding: 1rem;
+  text-align: center;
+}
